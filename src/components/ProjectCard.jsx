@@ -32,7 +32,7 @@ function ProjectCard({ title, description, tech, highlights, github, images }) {
     <>
       <div className="bg-gray-900 rounded-2xl p-6 shadow-lg hover:shadow-xl transition relative z-10">
         {images && images.length > 0 && (
-          <div className="relative w-full aspect-video mb-4 overflow-hidden rounded-lg border border-gray-800">
+          <div className="relative w-full mb-4 overflow-hidden rounded-lg border border-gray-800 h-[220px] sm:h-[300px] md:h-[360px]">
             <Slider {...sliderSettings}>
               {images.map((img, idx) => (
                 <div key={idx}>
