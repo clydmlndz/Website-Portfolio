@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
 // eslint-disable-next-line
 import { motion, AnimatePresence } from "framer-motion";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
-function ProjectCard({ title, description, tech, highlights, github, images }) {
+function ProjectCard({ title, description, tech, highlights, github, image }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   useEffect(() => {
     const handleEsc = (e) => {
@@ -17,38 +13,16 @@ function ProjectCard({ title, description, tech, highlights, github, images }) {
     return () => document.removeEventListener("keydown", handleEsc);
   }, [isOpen]);
 
-  const sliderSettings = {
-    autoplay: true,
-    autoplaySpeed: 3000,
-    dots: true,
-    arrows: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
-
   return (
     <>
       <div className="bg-gray-900 rounded-2xl p-6 shadow-lg hover:shadow-xl transition relative z-10">
-        {images && images.length > 0 && (
-          <div className="relative w-full mb-4 overflow-hidden rounded-lg border border-gray-800 h-[220px] sm:h-[300px] md:h-[360px]">
-            <Slider {...sliderSettings}>
-              {images.map((img, idx) => (
-                <div key={idx}>
-                  <img
-                    src={img}
-                    alt={`${title} Screenshot ${idx + 1}`}
-                    className="w-full h-full object-contain cursor-pointer"
-                    onClick={() => {
-                      setIsOpen(true);
-                      setSelectedImageIndex(idx);
-                    }}
-                  />
-                </div>
-              ))}
-            </Slider>
-          </div>
+        {image && (
+          <img
+            src={image}
+            alt={`${title} Screenshot`}
+            className="w-full rounded-lg mb-4 border border-gray-800 cursor-pointer hover:opacity-90 transition"
+            onClick={() => setIsOpen(true)}
+          />
         )}
 
         <h3 className="text-xl font-semibold mb-2">{title}</h3>
@@ -81,55 +55,26 @@ function ProjectCard({ title, description, tech, highlights, github, images }) {
         </a>
       </div>
 
-      {/* Lightbox Modal */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             key="lightbox"
-            className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50"
+            className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
             onClick={() => setIsOpen(false)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div
-              className="relative max-w-5xl w-full px-4"
+            <motion.img
+              src={image}
+              alt="Full Screenshot"
+              className="max-w-full max-h-[90vh] rounded-xl shadow-lg"
+              initial={{ scale: 0.85, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
               onClick={(e) => e.stopPropagation()}
-            >
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={selectedImageIndex}
-                  src={images[selectedImageIndex]}
-                  alt={`Expanded ${selectedImageIndex}`}
-                  className="w-full max-h-[90vh] object-contain rounded-xl"
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -50 }}
-                  transition={{ duration: 0.2, ease: "easeInOut" }}
-                />
-              </AnimatePresence>
-              <button
-                onClick={() =>
-                  setSelectedImageIndex(
-                    (selectedImageIndex - 1 + images.length) % images.length
-                  )
-                }
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl bg-black/60 border border-white rounded-full w-10 h-10 flex items-center justify-center hover:scale-105 transition"
-              >
-                ❮
-              </button>
-
-              <button
-                onClick={() =>
-                  setSelectedImageIndex(
-                    (selectedImageIndex + 1) % images.length
-                  )
-                }
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl bg-black/60 border border-white rounded-full w-10 h-10 flex items-center justify-center hover:scale-105 transition"
-              >
-                ❯
-              </button>
-            </div>
+            />
           </motion.div>
         )}
       </AnimatePresence>

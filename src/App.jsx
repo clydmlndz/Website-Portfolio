@@ -83,13 +83,7 @@ function App() {
                 "Built from scratch in March 2025",
               ]}
               github="https://github.com/moonBSIS/Pub-Express-POS"
-              images={[
-                "/pos-screenshot1.png",
-                "/pos-screenshot2.png",
-                "/pos-screenshot3.png",
-                "/pos-screenshot4.png",
-                "/pos-screenshot5.png",
-              ]}
+              image="/pos-screenshot.png"
             />
 
             <ProjectCard
@@ -103,13 +97,7 @@ function App() {
                 "Clean Axios + FastAPI integration",
               ]}
               github="https://github.com/moonBSIS/MMIS-Thesis"
-              images={[
-                "/mmis-screenshot1.png",
-                "/mmis-screenshot2.png",
-                "/mmis-screenshot3.png",
-                "/mmis-screenshot4.png",
-                "/mmis-screenshot5.png",
-              ]}
+              image="/mmis-screenshot.png"
             />
           </div>
         </motion.div>
